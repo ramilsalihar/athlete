@@ -1,5 +1,4 @@
 import 'package:athlete_go/core/aag_btm.dart';
-import 'package:athlete_go/core/aag_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +23,7 @@ class _SplashScreenState extends State<AagSplashScreen> {
     Navigator.pushReplacement(
       // ignore: use_build_context_synchronously
       context,
-      MaterialPageRoute(builder: (_) => AagDownBar()),
+      MaterialPageRoute(builder: (_) => const AagDownBar()),
     );
   }
 

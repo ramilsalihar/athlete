@@ -25,21 +25,23 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Your-little-fans-Fd',
           theme: ThemeData(
-              appBarTheme: const AppBarTheme(
-                backgroundColor: Colors.white,
-              ),
-              scaffoldBackgroundColor: Colors.white,
-              fontFamily: 'SFProDisplay',
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              splashFactory: NoSplash.splashFactory,
-              cupertinoOverrideTheme: const CupertinoThemeData(
-                  textTheme: CupertinoTextThemeData(
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.white,
+            ),
+            scaffoldBackgroundColor: Colors.white,
+            fontFamily: 'SFProDisplay',
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
+            cupertinoOverrideTheme: const CupertinoThemeData(
+              textTheme: CupertinoTextThemeData(
                 pickerTextStyle: TextStyle(
                     color: Color.fromARGB(255, 0, 0, 0),
                     fontSize: 23,
                     fontWeight: FontWeight.w400),
-              ))),
+              ),
+            ),
+          ),
           home: homeScreen,
         ));
   }
