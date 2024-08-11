@@ -1,3 +1,4 @@
+import 'package:athlete_go/aag_challenge/my/logic/my_hive_model.dart';
 import 'package:athlete_go/splash_screen/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  Hive.registerAdapter(MyHiveModelAdapter());
 
   runApp(const MyApp(homeScreen: AagSplashScreen()));
 }

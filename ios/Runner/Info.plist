@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+		<string>To take user Chellenge image</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>To choose user Chellenge image</string>
+		<key>UIStatusBarHidden</key>
+		<false/>
 </dict>
 </plist>
