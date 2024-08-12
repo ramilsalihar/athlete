@@ -1,9 +1,36 @@
+import 'package:athlete_go/aag_training/widgets/dn.dart';
+import 'package:athlete_go/core/aag_btm.dart';
 import 'package:athlete_go/core/aag_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class FinishPage extends StatelessWidget {
-  const FinishPage({super.key});
+class FinishPage extends StatefulWidget {
+  const FinishPage({super.key, required this.model});
+  final TrainDn model;
+
+  @override
+  State<FinishPage> createState() => _FinishPageState();
+}
+
+class _FinishPageState extends State<FinishPage> {
+  int kcal = 0;
+  int wrk = 0;
+
+  @override
+  void initState() {
+    getWr();
+    super.initState();
+  }
+
+  Future<void> getWr() async {
+    int trWk = await getKcal();
+    int trWk2 = await getWrk();
+
+    setState(() {
+      kcal = trWk;
+      wrk = trWk2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +44,7 @@ class FinishPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
           children: [
-            Image.asset('assets/images/image.png'),
+            Image.asset(widget.model.image),
             SizedBox(height: 16.h),
             Text(
               'Workout Finish',
@@ -54,7 +81,7 @@ class FinishPage extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      '20 min',
+                      '${widget.model.min} min',
                       style: TextStyle(
                         fontSize: 14.h,
                         fontWeight: FontWeight.w400,
@@ -77,7 +104,7 @@ class FinishPage extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      '95 kcal',
+                      '${widget.model.kcal} kcal',
                       style: TextStyle(
                         fontSize: 14.h,
                         fontWeight: FontWeight.w400,
@@ -114,7 +141,19 @@ class FinishPage extends StatelessWidget {
             ),
             SizedBox(height: 12.h),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                await setKcal(kcal + widget.model.kcal);
+                if (wrk < 3) {
+                  await setWrk(wrk + 1);
+                }
+
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AagDownBar(),
+                    ),
+                    (route) => false);
+              },
               child: Container(
                 width: double.infinity,
                 height: 56.h,
