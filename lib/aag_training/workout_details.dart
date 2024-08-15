@@ -1,11 +1,13 @@
-import 'package:athlete_go/aag_training/finish.dart';
+import 'package:athlete_go/aag_training/train_start.dart';
+import 'package:athlete_go/aag_training/widgets/dn.dart';
 import 'package:athlete_go/core/aag_app_fonts.dart';
 import 'package:athlete_go/core/aag_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WorkoutDetails extends StatelessWidget {
-  const WorkoutDetails({super.key});
+  const WorkoutDetails({super.key, required this.model});
+  final TrainDn model;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class WorkoutDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset('assets/images/image.png'),
+              Image.asset(model.image),
               Center(
                 child: Container(
                   width: 252.w,
@@ -45,7 +47,7 @@ class WorkoutDetails extends StatelessWidget {
                       ),
                       SizedBox(width: 8.w),
                       Text(
-                        '20 min',
+                        '${model.min} min',
                         style: TextStyle(
                           fontSize: 14.h,
                           fontWeight: FontWeight.w400,
@@ -68,7 +70,7 @@ class WorkoutDetails extends StatelessWidget {
                       ),
                       SizedBox(width: 8.w),
                       Text(
-                        '95 kcal',
+                        '${model.kcal} kcal',
                         style: TextStyle(
                           fontSize: 14.h,
                           fontWeight: FontWeight.w400,
@@ -81,7 +83,7 @@ class WorkoutDetails extends StatelessWidget {
               ),
               SizedBox(height: 16.h),
               Text(
-                'Exercises for burning fat in the chest',
+                model.title,
                 style: TextStyle(
                   fontSize: 16.h,
                   fontWeight: FontWeight.w700,
@@ -90,7 +92,7 @@ class WorkoutDetails extends StatelessWidget {
               ),
               SizedBox(height: 10.h),
               Text(
-                'The lower abdomen and hips are the most difficult areas of the body to reduce when we are on a diet. Even so, in this area, especially the legs as a whole, you can reduce weight even if you dont use tools.',
+                model.subTitle,
                 style: TextStyle(
                   fontSize: 14.h,
                   fontWeight: FontWeight.w400,
@@ -110,7 +112,7 @@ class WorkoutDetails extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '1/6',
+                    '1/${model.det.length}',
                     style: TextStyle(
                       fontSize: 16.h,
                       fontWeight: FontWeight.w700,
@@ -123,17 +125,21 @@ class WorkoutDetails extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(vertical: 10.h),
                 shrinkWrap: true,
-                itemCount: 6,
+                itemCount: model.det.length,
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 12),
-                itemBuilder: (context, index) => const WrkWidget(),
+                itemBuilder: (context, index) => WrkWidget(
+                  model: model.det[index],
+                ),
               ),
               InkWell(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FinishPage(),
+                      builder: (context) => TrainStart(
+                        model: model,
+                      ),
                     ),
                   );
                 },
@@ -168,7 +174,9 @@ class WorkoutDetails extends StatelessWidget {
 class WrkWidget extends StatelessWidget {
   const WrkWidget({
     super.key,
+    required this.model,
   });
+  final Det model;
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +193,10 @@ class WrkWidget extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            'assets/images/imageTr.png',
+            model.image,
+            width: 58.w,
+            height: 58.h,
+            fit: BoxFit.fill,
           ),
           SizedBox(width: 12.w),
           Expanded(
@@ -194,7 +205,7 @@ class WrkWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Jumping Jacks',
+                  model.title,
                   style: TextStyle(
                     fontSize: 14.h,
                     fontWeight: FontWeight.w700,
@@ -202,7 +213,7 @@ class WrkWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '30:00',
+                  '${model.min}',
                   style: TextStyle(
                     fontSize: 12.h,
                     fontWeight: FontWeight.w400,

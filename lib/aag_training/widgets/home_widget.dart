@@ -1,10 +1,12 @@
+import 'package:athlete_go/aag_training/widgets/dn.dart';
 import 'package:athlete_go/aag_training/workout_details.dart';
 import 'package:athlete_go/core/aag_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeWidget extends StatelessWidget {
-  const HomeWidget({super.key});
+  const HomeWidget({super.key, required this.model});
+  final TrainDn model;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,9 @@ class HomeWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const WorkoutDetails(),
+            builder: (context) => WorkoutDetails(
+              model: model,
+            ),
           ),
         );
       },
@@ -26,7 +30,10 @@ class HomeWidget extends StatelessWidget {
             child: Row(
               children: [
                 Image.asset(
-                  'assets/images/imageTr.png',
+                  model.image,
+                  width: 100.w,
+                  height: 100.h,
+                  fit: BoxFit.fill,
                 ),
                 SizedBox(width: 12.w),
                 Expanded(
@@ -35,7 +42,7 @@ class HomeWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Exercises for the abs ',
+                        model.title,
                         style: TextStyle(
                           fontSize: 14.h,
                           fontWeight: FontWeight.w700,
@@ -43,7 +50,7 @@ class HomeWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '6 exercises',
+                        '${model.det.length} exercises',
                         style: TextStyle(
                           fontSize: 14.h,
                           fontWeight: FontWeight.w400,

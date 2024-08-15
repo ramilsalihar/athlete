@@ -1,10 +1,35 @@
+import 'package:athlete_go/aag_training/widgets/dn.dart';
 import 'package:athlete_go/aag_training/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int kcal = 0;
+  int wrk = 0;
+
+  @override
+  void initState() {
+    getWr();
+    super.initState();
+  }
+
+  Future<void> getWr() async {
+    int trWk = await getKcal();
+    int trWk2 = await getWrk();
+
+    setState(() {
+      kcal = trWk;
+      wrk = trWk2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,26 +66,47 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 12.h),
-                    SizedBox(
-                      height: 120.h,
-                      child: CircularPercentIndicator(
-                        radius: 60,
-                        lineWidth: 18.0,
-                        animation: true,
-                        percent: 0.7,
-                        center: const Text(
-                          "1256kl",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        ),
-                        circularStrokeCap: CircularStrokeCap.round,
-                        progressColor: const Color(0xffFFA800),
-                        backgroundColor: Colors.white,
-                        reverse: true,
-                      ),
-                    ),
+                    kcal <= 2290
+                        ? SizedBox(
+                            height: 120.h,
+                            child: CircularPercentIndicator(
+                              radius: 60,
+                              lineWidth: 18.0,
+                              animation: true,
+                              percent: (kcal * 100 / 2290) / 100,
+                              center: Text(
+                                "${kcal}kl",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              circularStrokeCap: CircularStrokeCap.round,
+                              progressColor: const Color(0xffFFA800),
+                              backgroundColor: Colors.white,
+                              reverse: true,
+                            ),
+                          )
+                        : SizedBox(
+                            height: 120.h,
+                            child: CircularPercentIndicator(
+                              radius: 60,
+                              lineWidth: 18.0,
+                              animation: true,
+                              percent: 1,
+                              center: Text(
+                                "${kcal}kl",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              circularStrokeCap: CircularStrokeCap.round,
+                              progressColor: const Color(0xffFFA800),
+                              backgroundColor: Colors.white,
+                              reverse: true,
+                            ),
+                          )
                   ],
                 ),
               ),
@@ -96,7 +142,7 @@ class HomePage extends StatelessWidget {
                     ),
                     SizedBox(height: 36.h),
                     Text(
-                      '0/3',
+                      '$wrk/3',
                       style: TextStyle(
                         fontSize: 32.h,
                         fontWeight: FontWeight.w700,
@@ -122,9 +168,11 @@ class HomePage extends StatelessWidget {
           child: ListView.separated(
             padding: EdgeInsets.symmetric(vertical: 16.h),
             shrinkWrap: true,
-            itemCount: 6,
+            itemCount: listWork.length,
             separatorBuilder: (context, index) => const SizedBox(height: 12),
-            itemBuilder: (context, index) => const HomeWidget(),
+            itemBuilder: (context, index) => HomeWidget(
+              model: listWork[index],
+            ),
           ),
         ),
       ],
