@@ -1,3 +1,5 @@
+import 'package:athlete_go/aag_testing/widgets/sh_water_widget.dart';
+import 'package:athlete_go/aag_testing/widgets/sh_weight_widget.dart';
 import 'package:athlete_go/core/aag_app_fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -18,8 +20,20 @@ class _AagTestingState extends State<AagTesting> {
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
         title: Text(
-          'Testing',
+          'Sport and Health',
           style: AagAppFonts.s20w700,
+        ),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                ShWaterWidget(),
+                ShWeightWidget(),
+              ],
+            )
+          ],
         ),
       ),
     );
