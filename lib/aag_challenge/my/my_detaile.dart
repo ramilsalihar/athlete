@@ -5,8 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyDetaile extends StatefulWidget {
-  const MyDetaile({super.key, required this.model});
+  const MyDetaile(
+      {super.key, required this.model, this.isFromChallenge = false});
   final MyHiveModel model;
+  final bool isFromChallenge;
 
   @override
   State<MyDetaile> createState() => _MyDetaileState();
@@ -44,7 +46,9 @@ class _MyDetaileState extends State<MyDetaile> {
               height: 234.h,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: MemoryImage(imageCodeUnitsDetail),
+                  image: widget.isFromChallenge
+                      ? Image.asset(widget.model.image).image
+                      : MemoryImage(imageCodeUnitsDetail),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(16),

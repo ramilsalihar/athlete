@@ -8,28 +8,40 @@ class ShButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.title,
+    this.width = double.infinity,
+    this.isOutlined = false,
   });
 
   final VoidCallback onPressed;
   final String title;
+  final double width;
+  final bool isOutlined;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        width: double.infinity,
+        width: width,
         height: 56.h,
         decoration: BoxDecoration(
-          color: AagAppColors.blue,
+          color: isOutlined ? Colors.transparent : AagAppColors.blue,
           borderRadius: BorderRadius.circular(16),
+          border: isOutlined
+              ? Border.all(
+                  color: AagAppColors.blue,
+                  width: 1,
+                )
+              : null,
         ),
         child: Center(
-          child: Text(title,
-              style: AagAppFonts.s16w500.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              )),
+          child: Text(
+            title,
+            style: AagAppFonts.s16w500.copyWith(
+              color: isOutlined ? AagAppColors.blue : Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ),
       ),
     );

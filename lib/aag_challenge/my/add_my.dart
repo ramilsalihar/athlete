@@ -171,6 +171,8 @@ class _AddMyState extends State<AddMy> {
                       description: _controllerDes.text,
                       image: photo!,
                     );
+                    // Provider.of<DefChallengeProvider>(context, listen: false)
+                    //     .addChallenge(myHiveModel);
                     await MyRepoImpl().setMy(myHiveModel);
                     Navigator.pushAndRemoveUntil(
                       context,

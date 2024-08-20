@@ -1,10 +1,11 @@
+import 'package:athlete_go/aag_challenge/challenge/default_challenge.dart';
+import 'package:athlete_go/aag_challenge/challenge/widgets/daily_challenge_popup.dart';
 import 'package:athlete_go/aag_challenge/my/add_my.dart';
 import 'package:athlete_go/core/aag_app_fonts.dart';
 import 'package:athlete_go/core/aag_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'my/my.dart';
 
@@ -16,6 +17,39 @@ class AagChallenge extends StatefulWidget {
 }
 
 class _AagChallengeState extends State<AagChallenge> {
+  bool _isPopupChecked = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Ensure the popup is only checked once after the widget is first built
+    if (!_isPopupChecked) {
+      _checkForDailyPopup();
+      _isPopupChecked = true;
+    }
+  }
+
+  Future<void> _checkForDailyPopup() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? lastShownDate = prefs.getString('last_popup_date');
+    String today = DateTime.now().toIso8601String().substring(0, 10);
+
+    if (lastShownDate != today) {
+      await _showDailyPopup();
+      await prefs.setString('last_popup_date', today);
+    }
+  }
+
+  Future<void> _showDailyPopup() async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DailyChallengePopUp();
+      },
+    );
+  }
+
   bool page = true;
   @override
   Widget build(BuildContext context) {
@@ -82,7 +116,7 @@ class _AagChallengeState extends State<AagChallenge> {
                         ),
                         child: Center(
                           child: Text(
-                            'My chellange',
+                            'My challenge',
                             style: TextStyle(
                               fontSize: 16.h,
                               fontWeight: FontWeight.w700,
@@ -128,7 +162,7 @@ class _AagChallengeState extends State<AagChallenge> {
             ),
             page == true
                 ? const Expanded(child: MyChellange())
-                : const SizedBox()
+                : const Expanded(child: DefaultChallenge())
           ],
         ),
       ),

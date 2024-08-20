@@ -11,7 +11,7 @@ class ShWaterWidget extends StatefulWidget {
 }
 
 class _ShWaterWidgetState extends State<ShWaterWidget> {
-  int _currentIntake = 1;
+  int _currentIntake = 0;
   final int _goalIntake = 8;
 
   void _incrementIntake() {
@@ -32,7 +32,10 @@ class _ShWaterWidgetState extends State<ShWaterWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Container(
+      // height: width * 0.55,
+      width: width * 0.45,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: AagAppColors.blueBg,
@@ -50,9 +53,19 @@ class _ShWaterWidgetState extends State<ShWaterWidget> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const Icon(
-                Icons.arrow_forward,
-                size: 20.0,
+              IconButton(
+                onPressed: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (_) => const ShWeightScreen(),
+                  //   ),
+                  // );
+                },
+                icon: Icon(
+                  Icons.arrow_forward,
+                ),
+                iconSize: 20.0,
               ),
             ],
           ),
@@ -61,12 +74,9 @@ class _ShWaterWidgetState extends State<ShWaterWidget> {
               Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 28.0,
-                  ),
+                  padding: const EdgeInsets.only(bottom: 30),
                   child: CircularPercentIndicator(
-                    radius: 60.0,
+                    radius: 50.0,
                     lineWidth: 10.0,
                     percent: _currentIntake / _goalIntake,
                     center: Column(
